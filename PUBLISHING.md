@@ -24,8 +24,8 @@ export UV_PUBLISH_TOKEN_PYPI="pypi-...your-pypi-token..."
 2. **Bump the version** in `packages/labs-agent-lib/pyproject.toml`. (PyPI strictly requires a new version number for every upload).
 3. *(Optional)* Tag the release in git:
    ```bash
-   git tag labs-agent-lib-v0.2.0
-   git push origin labs-agent-lib-v0.2.0
+   git tag labs-agent-lib-v0.3.0
+   git push origin labs-agent-lib-v0.3.0
    ```
 
 ## 2. Build the Package
@@ -46,7 +46,8 @@ uv publish \
   --publish-url [https://test.pypi.org/legacy/](https://test.pypi.org/legacy/) \
   dist/labs_agent_lib-0.2.0*
 ```
-*(Alternatively, pass the token directly: `uv publish --publish-url https://test.pypi.org/legacy/ --token pypi-.. dist/labs_agent_lib-0.2.0*`)*
+*(Alternatively, pass the token directly: 
+`uv publish --publish-url https://test.pypi.org/legacy/ --token pypi-.. dist/labs_agent_lib-0.3.0*`)*
 
 ### 3.1 Verify TestPyPI Installation
 Because TestPyPI lacks all third-party dependencies, pull the package from TestPyPI and dependencies from the real PyPI:
@@ -93,7 +94,7 @@ pip install labs-agent-lib
 from labs_agent_lib import get_logger, get_settings, get_agent_environment
 from labs_agent_lib.file_reader import extract_text
 ```
-> **Note:** As per the README's "Known limitation", `settings` and `logger` are currently coupled to the `candidate_match_agent` namespace (environment variables and root logger name). `file_reader` and `agent_environment` are fully reusable.
+> **Note:** As per the README's "Known limitation", `settings` is currently coupled to the `candidate_match_agent` namespace (environment variable prefix). `logger`, `file_reader`, and `agent_environment` are fully reusable.
 
 ## 6. Quick Update Workflow Summary
 1. Update code in `packages/labs-agent-lib/src/labs_agent_lib/`.

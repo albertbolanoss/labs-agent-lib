@@ -12,24 +12,26 @@ import sys
 
 from labs_agent_lib.settings import get_settings
 
-_ROOT_LOGGER_NAME = "candidate_match_agent"
-_configured = False
+_configured_roots: set[str] = set()
 
 
-def _configure() -> None:
-    global _configured
-    if _configured:
+def _configure(root_name: str) -> None:
+    if root_name in _configured_roots:
         return
-    root = logging.getLogger(_ROOT_LOGGER_NAME)
+    root = logging.getLogger(root_name)
     root.setLevel(get_settings().log_level.value)
     handler = logging.StreamHandler(sys.stderr)
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-8s %(name)s: %(message)s"))
     root.addHandler(handler)
     root.propagate = False
-    _configured = True
+    _configured_roots.add(root_name)
 
 
 def get_logger(name: str) -> logging.Logger:
-    """Return a logger in the labs_resume_agent hierarchy; pass __name__ from the call site."""
-    _configure()
+    """Return a logger in the caller's package hierarchy; pass __name__ from the call site.
+
+    The top-level package segment of `name` is configured as its own logging root on first
+    use, so each consuming project gets its level/handler without hardcoding its package name.
+    """
+    _configure(name.split(".", 1)[0])
     return logging.getLogger(name)

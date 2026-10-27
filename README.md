@@ -17,12 +17,10 @@ This is a first extraction, not yet a fully generic library:
 - `Settings` reads environment variables under the `CANDIDATE_MATCH_AGENT_` prefix and still carries
   `candidate-match-agent`-specific fields (`resume_dir`, `resume_poll_interval_seconds`,
   `resume_max_files_per_batch`).
-- `logger`'s root logger name is hardcoded to `candidate_match_agent`, so `get_logger(__name__)` only attaches
-  the shared handler/level for loggers under that namespace.
 
-Projects other than `candidate-match-agent` can still install and use `file_reader` and `agent_environment` as-is,
-but `settings`/`logger` will need the prefix/root-name to be made configurable before they're truly reusable
-elsewhere. Tracked as follow-up work.
+Projects other than `candidate-match-agent` can still install and use `file_reader`, `agent_environment`, and
+`logger` as-is, but `settings` will need the prefix to be made configurable before it's truly reusable elsewhere.
+Tracked as follow-up work.
 
 ## Install
 
