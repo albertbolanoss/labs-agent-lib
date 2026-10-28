@@ -7,4 +7,5 @@ __all__ = [
     "get_logger",
     "get_agent_settings",
     "extract_text",
+    "get_agent_environment",
 ]
