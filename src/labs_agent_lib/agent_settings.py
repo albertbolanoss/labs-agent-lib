@@ -7,8 +7,8 @@ repository root, prefixing every key with `LABS_AGENT_LIB_`, e.g.:
     LABS_AGENT_LIB_LOG_LEVEL=DEBUG
     LABS_AGENT_LIB_ANTHROPIC_API_KEY=sk-ant-...
 
-Call `get_settings()` to get the cached singleton instead of instantiating `Settings`
-directly, so the `.env` file is only read once per process.
+Call `get_agent_settings()` to get the cached singleton instead of instantiating
+`AgentSettings` directly, so the `.env` file is only read once per process.
 """
 
 from enum import StrEnum
@@ -34,7 +34,7 @@ class LogLevel(StrEnum):
     ERROR = "ERROR"
 
 
-class Settings(BaseSettings):
+class AgentSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="LABS_AGENT_LIB_",
@@ -57,6 +57,6 @@ class Settings(BaseSettings):
 
 
 @lru_cache
-def get_settings() -> Settings:
+def get_agent_settings() -> AgentSettings:
     """Return the cached application settings singleton."""
-    return Settings()
+    return AgentSettings()

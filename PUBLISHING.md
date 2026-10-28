@@ -61,7 +61,7 @@ uv pip install \
   --extra-index-url [https://pypi.org/simple/](https://pypi.org/simple/) \
   labs-agent-lib
 
-uv run python -c "from labs_agent_lib import get_logger, get_settings; print('OK')"
+uv run python -c "from labs_agent_lib import get_logger, get_agent_settings; print('OK')"
 ```
 *If this fails, fix the code, bump the version again (e.g., `0.2.1`), and repeat steps 1-3.*
 
@@ -79,7 +79,7 @@ uv publish dist/labs_agent_lib-0.1.0*
 uv venv /tmp/check-labs-agent-lib-real
 cd /tmp/check-labs-agent-lib-real
 uv pip install labs-agent-lib
-uv run python -c "from labs_agent_lib import get_logger, get_settings; print('OK')"
+uv run python -c "from labs_agent_lib import get_logger, get_agent_settings; print('OK')"
 ```
 
 ## 5. Using the Package
@@ -91,7 +91,7 @@ uv add labs-agent-lib
 pip install labs-agent-lib
 ```
 ```python
-from labs_agent_lib import get_logger, get_settings, get_agent_environment
+from labs_agent_lib import get_logger, get_agent_settings, get_agent_environment
 from labs_agent_lib.file_reader import extract_text
 ```
 > **Note:** `agent_settings` reads its env vars under the `LABS_AGENT_LIB_` prefix — see the README's "Configuration" section for the full list.

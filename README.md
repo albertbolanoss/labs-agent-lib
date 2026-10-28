@@ -3,9 +3,9 @@
 Shared utilities extracted from [`candidate-match-agent`](https://github.com/albertbolanoss/candidate-match-agent) for
 building Claude-agent-based projects:
 
-- `labs_agent_lib.agent_settings` — a `pydantic-settings` `Settings` model (gateway provider, log level, Portkey/Anthropic
+- `labs_agent_lib.agent_settings` — a `pydantic-settings` `AgentSettings` model (gateway provider, log level, Portkey/Anthropic
   credentials, prompt-caching toggle).
-- `labs_agent_lib.logger` — centralized stderr logging, configured from `Settings.log_level`.
+- `labs_agent_lib.logger` — centralized stderr logging, configured from `AgentSettings.log_level`.
 - `labs_agent_lib.file_reader` — extracts plain text from `.pdf`, `.docx`, `.txt`, `.md`, and `.markdown` files.
 - `labs_agent_lib.agent_environment` — builds the `ClaudeAgentOptions.env` dict (base URL, API key, custom headers)
   for the configured provider.
@@ -20,7 +20,7 @@ pip install labs-agent-lib
 
 ## Configuration
 
-`Settings` reads from your project's own `.env` file (or real environment variables), with every key
+`AgentSettings` reads from your project's own `.env` file (or real environment variables), with every key
 prefixed `LABS_AGENT_LIB_`:
 
 | Env var | Default | Description |
@@ -44,11 +44,11 @@ LABS_AGENT_LIB_ANTHROPIC_API_KEY=sk-ant-...
 ## Usage
 
 ```python
-from labs_agent_lib import get_logger, get_settings, get_agent_environment
+from labs_agent_lib import get_logger, get_agent_settings, get_agent_environment
 from labs_agent_lib.file_reader import extract_text
 
 logger = get_logger(__name__)
-settings = get_settings()
+settings = get_agent_settings()
 env = get_agent_environment(settings)
 text = extract_text("resume.pdf")
 ```

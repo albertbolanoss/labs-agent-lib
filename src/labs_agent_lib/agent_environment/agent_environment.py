@@ -1,8 +1,8 @@
-"""Builds the Claude Agent SDK environment for the gateway configured in Settings."""
+"""Builds the Claude Agent SDK environment for the gateway configured in AgentSettings."""
 
 from dataclasses import dataclass
 
-from labs_agent_lib.agent_settings import Provider, Settings
+from labs_agent_lib.agent_settings import AgentSettings, Provider
 
 
 @dataclass(frozen=True, slots=True)
@@ -18,7 +18,7 @@ class AgentEnvironment:
     env: dict[str, str]
 
 
-def get_agent_environment(settings: Settings) -> AgentEnvironment:
+def get_agent_environment(settings: AgentSettings) -> AgentEnvironment:
     """Build the AgentEnvironment for the provider configured in settings.provider.
 
     Both supported providers speak the Anthropic Messages API, so routing to either
