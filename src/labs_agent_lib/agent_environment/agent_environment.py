@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 
-from labs_agent_lib.settings import Provider, Settings
+from labs_agent_lib.agent_settings import Provider, Settings
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,7 +31,7 @@ def get_agent_environment(settings: Settings) -> AgentEnvironment:
 
     if not api_key.get_secret_value():
         raise ValueError(
-            f"CANDIDATE_MATCH_AGENT_{settings.provider.value.upper()}_API_KEY is required when provider={settings.provider}"
+            f"LABS_AGENT_LIB_{settings.provider.value.upper()}_API_KEY is required when provider={settings.provider}"
         )
 
     if settings.provider is Provider.PORTKEY:

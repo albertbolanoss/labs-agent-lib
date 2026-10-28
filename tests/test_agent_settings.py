@@ -1,6 +1,6 @@
 import pytest
 
-from labs_agent_lib.settings import LogLevel, Provider, Settings, get_settings
+from labs_agent_lib.agent_settings import LogLevel, Provider, Settings, get_settings
 
 
 def test_provider_values():
@@ -27,8 +27,8 @@ def test_defaults_when_no_env_vars_are_set():
 
 
 def test_reads_provider_and_log_level_from_env(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PROVIDER", "anthropic")
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_LOG_LEVEL", "DEBUG")
+    monkeypatch.setenv("LABS_AGENT_LIB_PROVIDER", "anthropic")
+    monkeypatch.setenv("LABS_AGENT_LIB_LOG_LEVEL", "DEBUG")
 
     settings = Settings(_env_file=None)
 
@@ -37,10 +37,10 @@ def test_reads_provider_and_log_level_from_env(monkeypatch: pytest.MonkeyPatch):
 
 
 def test_reads_base_urls_and_api_keys_from_env(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PORTKEY_BASE_URL", "https://portkey.example.com")
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PORTKEY_API_KEY", "portkey-secret")
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_ANTHROPIC_BASE_URL", "https://anthropic.example.com")
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_ANTHROPIC_API_KEY", "anthropic-secret")
+    monkeypatch.setenv("LABS_AGENT_LIB_PORTKEY_BASE_URL", "https://portkey.example.com")
+    monkeypatch.setenv("LABS_AGENT_LIB_PORTKEY_API_KEY", "portkey-secret")
+    monkeypatch.setenv("LABS_AGENT_LIB_ANTHROPIC_BASE_URL", "https://anthropic.example.com")
+    monkeypatch.setenv("LABS_AGENT_LIB_ANTHROPIC_API_KEY", "anthropic-secret")
 
     settings = Settings(_env_file=None)
 
@@ -51,7 +51,7 @@ def test_reads_base_urls_and_api_keys_from_env(monkeypatch: pytest.MonkeyPatch):
 
 
 def test_api_keys_are_masked_in_str_and_repr(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PORTKEY_API_KEY", "super-secret")
+    monkeypatch.setenv("LABS_AGENT_LIB_PORTKEY_API_KEY", "super-secret")
 
     settings = Settings(_env_file=None)
 
@@ -60,7 +60,7 @@ def test_api_keys_are_masked_in_str_and_repr(monkeypatch: pytest.MonkeyPatch):
 
 
 def test_unknown_env_vars_with_the_app_prefix_are_ignored(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_SOME_UNKNOWN_FIELD", "whatever")
+    monkeypatch.setenv("LABS_AGENT_LIB_SOME_UNKNOWN_FIELD", "whatever")
 
     settings = Settings(_env_file=None)  # must not raise
 
@@ -68,7 +68,7 @@ def test_unknown_env_vars_with_the_app_prefix_are_ignored(monkeypatch: pytest.Mo
 
 
 def test_get_settings_returns_a_settings_instance(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PROVIDER", "anthropic")
+    monkeypatch.setenv("LABS_AGENT_LIB_PROVIDER", "anthropic")
 
     settings = get_settings()
 
@@ -77,10 +77,10 @@ def test_get_settings_returns_a_settings_instance(monkeypatch: pytest.MonkeyPatc
 
 
 def test_get_settings_is_cached_across_calls(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PROVIDER", "anthropic")
+    monkeypatch.setenv("LABS_AGENT_LIB_PROVIDER", "anthropic")
     first = get_settings()
 
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_PROVIDER", "portkey")
+    monkeypatch.setenv("LABS_AGENT_LIB_PROVIDER", "portkey")
     second = get_settings()
 
     assert first is second

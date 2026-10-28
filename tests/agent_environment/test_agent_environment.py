@@ -3,7 +3,7 @@
 import pytest
 
 from labs_agent_lib.agent_environment.agent_environment import get_agent_environment
-from labs_agent_lib.settings import Provider, Settings
+from labs_agent_lib.agent_settings import Provider, Settings
 
 
 def _settings(**overrides) -> Settings:

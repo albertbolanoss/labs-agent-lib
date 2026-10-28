@@ -1,4 +1,4 @@
-from labs_agent_lib.settings import LogLevel, Provider, Settings, get_settings
+from labs_agent_lib.agent_settings import LogLevel, Provider, Settings, get_settings
 
 from .agent_environment import AgentEnvironment, get_agent_environment
 

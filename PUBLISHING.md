@@ -94,7 +94,7 @@ pip install labs-agent-lib
 from labs_agent_lib import get_logger, get_settings, get_agent_environment
 from labs_agent_lib.file_reader import extract_text
 ```
-> **Note:** As per the README's "Known limitation", `settings` is currently coupled to the `candidate_match_agent` namespace (environment variable prefix). `logger`, `file_reader`, and `agent_environment` are fully reusable.
+> **Note:** `agent_settings` reads its env vars under the `LABS_AGENT_LIB_` prefix — see the README's "Configuration" section for the full list.
 
 ## 6. Quick Update Workflow Summary
 1. Update code in `packages/labs-agent-lib/src/labs_agent_lib/`.

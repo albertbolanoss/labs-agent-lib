@@ -10,7 +10,7 @@ an MCP stdio subprocess, and anything printed to stdout there would corrupt the 
 import logging
 import sys
 
-from labs_agent_lib.settings import get_settings
+from labs_agent_lib.agent_settings import get_settings
 
 _configured_roots: set[str] = set()
 
