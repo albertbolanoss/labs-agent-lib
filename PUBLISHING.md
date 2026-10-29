@@ -24,8 +24,8 @@ export UV_PUBLISH_TOKEN_PYPI="pypi-...your-pypi-token..."
 2. **Bump the version** in `packages/labs-agent-lib/pyproject.toml`. (PyPI strictly requires a new version number for every upload).
 3. *(Optional)* Tag the release in git:
    ```bash
-   git tag labs-agent-lib-v0.4.1
-   git push origin labs-agent-lib-v0.4.1
+   git tag labs-agent-lib-v0.4.2
+   git push origin labs-agent-lib-v0.4.2
    ```
 
 ## 2. Build the Package
