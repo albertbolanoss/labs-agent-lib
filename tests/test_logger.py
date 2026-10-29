@@ -43,7 +43,7 @@ def test_first_call_attaches_a_single_stderr_handler_to_the_top_level_package_lo
 
 
 def test_root_logger_level_comes_from_settings(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_LOG_LEVEL", "WARNING")
+    monkeypatch.setenv("LABS_AGENT_LIB_LOG_LEVEL", "WARNING")
 
     get_logger("some.module")
 
@@ -60,13 +60,13 @@ def test_calling_get_logger_again_for_the_same_top_level_package_does_not_add_a_
 
 
 def test_calling_get_logger_again_does_not_recompute_the_level(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_LOG_LEVEL", "WARNING")
+    monkeypatch.setenv("LABS_AGENT_LIB_LOG_LEVEL", "WARNING")
     get_logger("some.module")
 
     root = logging.getLogger("some")
     root.setLevel(logging.CRITICAL)  # simulate something else changing it after configure
 
-    monkeypatch.setenv("CANDIDATE_MATCH_AGENT_LOG_LEVEL", "DEBUG")
+    monkeypatch.setenv("LABS_AGENT_LIB_LOG_LEVEL", "DEBUG")
     get_logger("some.other.module")
 
     assert root.level == logging.CRITICAL

@@ -1,7 +1,7 @@
 """Centralized logging setup for the whole app (coordinators, subagent task events, MCP tools).
 
 Usage: `logger = get_logger(__name__)` at module level, then `logger.debug/info/warning/error(...)`.
-Verbosity is controlled by Settings.log_level (LABS_RESUME_AGENT_LOG_LEVEL) - set it to DEBUG to
+Verbosity is controlled by AgentSettings.log_level (LABS_RESUME_AGENT_LOG_LEVEL) - set it to DEBUG to
 see every step (tool calls, per-task progress) or leave it at INFO to only see the high-level
 phases (task started/done, final results). Logs go to stderr, not stdout: mcp_server.py runs as
 an MCP stdio subprocess, and anything printed to stdout there would corrupt the MCP protocol.
@@ -10,7 +10,7 @@ an MCP stdio subprocess, and anything printed to stdout there would corrupt the 
 import logging
 import sys
 
-from labs_agent_lib.settings import get_settings
+from labs_agent_lib.agent_settings import get_agent_settings
 
 _configured_roots: set[str] = set()
 
@@ -19,7 +19,7 @@ def _configure(root_name: str) -> None:
     if root_name in _configured_roots:
         return
     root = logging.getLogger(root_name)
-    root.setLevel(get_settings().log_level.value)
+    root.setLevel(get_agent_settings().log_level.value)
     handler = logging.StreamHandler(sys.stderr)
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-8s %(name)s: %(message)s"))
     root.addHandler(handler)

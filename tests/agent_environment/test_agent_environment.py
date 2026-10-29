@@ -1,13 +1,13 @@
-"""Tests for building the Claude Agent SDK subprocess environment from Settings."""
+"""Tests for building the Claude Agent SDK subprocess environment from AgentSettings."""
 
 import pytest
 
 from labs_agent_lib.agent_environment.agent_environment import get_agent_environment
-from labs_agent_lib.settings import Provider, Settings
+from labs_agent_lib.agent_settings import AgentSettings, Provider
 
 
-def _settings(**overrides) -> Settings:
-    return Settings(_env_file=None, **overrides)
+def _settings(**overrides) -> AgentSettings:
+    return AgentSettings(_env_file=None, **overrides)
 
 
 def test_portkey_without_virtual_key_sends_only_the_api_key_header():

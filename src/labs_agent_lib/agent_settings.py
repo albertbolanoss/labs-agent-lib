@@ -1,3 +1,16 @@
+"""Application settings for projects built on labs-agent-lib.
+
+Consuming projects configure this via a `.env` file (or real env vars) at their own
+repository root, prefixing every key with `LABS_AGENT_LIB_`, e.g.:
+
+    LABS_AGENT_LIB_PROVIDER=anthropic
+    LABS_AGENT_LIB_LOG_LEVEL=DEBUG
+    LABS_AGENT_LIB_ANTHROPIC_API_KEY=sk-ant-...
+
+Call `get_agent_settings()` to get the cached singleton instead of instantiating
+`AgentSettings` directly, so the `.env` file is only read once per process.
+"""
+
 from enum import StrEnum
 from functools import lru_cache
 
@@ -21,10 +34,10 @@ class LogLevel(StrEnum):
     ERROR = "ERROR"
 
 
-class Settings(BaseSettings):
+class AgentSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
-        env_prefix="CANDIDATE_MATCH_AGENT_",
+        env_prefix="LABS_AGENT_LIB_",
         env_file_encoding="utf-8",
         extra="ignore",
         populate_by_name=True,
@@ -36,23 +49,14 @@ class Settings(BaseSettings):
     portkey_base_url: str = "https://portkeygateway.perficient.com"
     portkey_api_key: SecretStr = SecretStr("")
     portkey_virtual: str = ""
-    """Provider/credential alias configured in the Portkey dashboard (e.g. "aws-bedrock-use2").
-    Not a secret - it's an identifier, not a credential - so it's a plain str setting, not SecretStr."""
-
+    
     anthropic_base_url: str = "https://api.anthropic.com"
     anthropic_api_key: SecretStr = SecretStr("")
 
-    resume_dir: str = "resume"
-    resume_poll_interval_seconds: float = 300
-    resume_max_files_per_batch: int = 3
-
     disable_prompt_caching: bool = False
-    """Disables Anthropic prompt caching (no `cache_control` breakpoints) for the agent's requests.
-    Enable during development (CANDIDATE_MATCH_AGENT_DISABLE_PROMPT_CACHING=true) when iterating on the
-    system prompt, since a cached prefix can otherwise be reused across runs within the cache's TTL."""
 
 
 @lru_cache
-def get_settings() -> Settings:
+def get_agent_settings() -> AgentSettings:
     """Return the cached application settings singleton."""
-    return Settings()
+    return AgentSettings()
