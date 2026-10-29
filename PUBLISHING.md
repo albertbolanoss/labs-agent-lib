@@ -24,8 +24,8 @@ export UV_PUBLISH_TOKEN_PYPI="pypi-...your-pypi-token..."
 2. **Bump the version** in `packages/labs-agent-lib/pyproject.toml`. (PyPI strictly requires a new version number for every upload).
 3. *(Optional)* Tag the release in git:
    ```bash
-   git tag labs-agent-lib-v0.4.0
-   git push origin labs-agent-lib-v0.4.0
+   git tag labs-agent-lib-v0.4.1
+   git push origin labs-agent-lib-v0.4.1
    ```
 
 ## 2. Build the Package
@@ -45,10 +45,10 @@ export UV_PUBLISH_TOKEN="pypi-..."
 
 uv publish \
   --publish-url [https://test.pypi.org/legacy/](https://test.pypi.org/legacy/) \
-  dist/labs_agent_lib-0.2.0*
+  dist/labs_agent_lib-0.4.1*
 ```
 *(Alternatively, pass the token directly: 
-`uv publish --publish-url https://test.pypi.org/legacy/ --token pypi-.. dist/labs_agent_lib-0.4.0*`)*
+`uv publish --publish-url https://test.pypi.org/legacy/ --token pypi-.. dist/labs_agent_lib-0.4.1*`)*
 
 ### 3.1 Verify TestPyPI Installation
 Because TestPyPI lacks all third-party dependencies, pull the package from TestPyPI and dependencies from the real PyPI:
