@@ -3,6 +3,7 @@ from .agent_settings import get_agent_settings
 from .file_reader.extractor import extract_text
 from .file_writer import file_writer
 from .agent_environment import get_agent_environment
+from .observability import AgentTranscriptWriter, PromptLogWriter
 
 __all__ = [
     "get_logger",
@@ -10,4 +11,6 @@ __all__ = [
     "extract_text",
     "file_writer",
     "get_agent_environment",
+    "AgentTranscriptWriter",
+    "PromptLogWriter",
 ]

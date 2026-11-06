@@ -10,7 +10,7 @@ This package is a [uv workspace](https://docs.astral.sh/uv/concepts/projects/wor
 * Export your tokens as environment variables to keep them out of your shell history:
 
 ```bash
-export UV_PUBLISH_TOKEN_TESTPYPI="pypi-...your-testpypi-token..."
+export UV_PUBLISH_TOKEN_TESTPYPI="pypi-...your-pypi-token..."
 export UV_PUBLISH_TOKEN_PYPI="pypi-...your-pypi-token..."
 ```
 
@@ -24,15 +24,15 @@ export UV_PUBLISH_TOKEN_PYPI="pypi-...your-pypi-token..."
 2. **Bump the version** in `packages/labs-agent-lib/pyproject.toml`. (PyPI strictly requires a new version number for every upload).
 3. *(Optional)* Tag the release in git:
    ```bash
-   git tag labs-agent-lib-v0.4.2
-   git push origin labs-agent-lib-v0.4.2
+   git tag labs-agent-lib-v0.1.0
+   git push origin labs-agent-lib-v0.1.0
    ```
 
 ## 2. Build the Package
 From the repository root, run:
 
 ```bash
-rm dist
+rm -rf dist/
 uv build --package labs-agent-lib
 ```
 Verify that the `dist/` folder contains only the `.tar.gz` and `.whl` files for the version you intend to publish. Delete older files if necessary.
@@ -41,14 +41,8 @@ Verify that the `dist/` folder contains only the `.tar.gz` and `.whl` files for 
 Always publish to TestPyPI first to validate metadata and dependencies.
 
 ```bash
-export UV_PUBLISH_TOKEN="pypi-..."
-
-uv publish \
-  --publish-url [https://test.pypi.org/legacy/](https://test.pypi.org/legacy/) \
-  dist/labs_agent_lib-0.4.1*
+uv publish --publish-url https://test.pypi.org/legacy/ --token pypi-.. dist/labs_agent_lib-0.1.0*
 ```
-*(Alternatively, pass the token directly: 
-`uv publish --publish-url https://test.pypi.org/legacy/ --token pypi-.. dist/labs_agent_lib-0.4.1*`)*
 
 ### 3.1 Verify TestPyPI Installation
 Because TestPyPI lacks all third-party dependencies, pull the package from TestPyPI and dependencies from the real PyPI:
@@ -57,10 +51,7 @@ Because TestPyPI lacks all third-party dependencies, pull the package from TestP
 uv venv /tmp/check-labs-agent-lib
 cd /tmp/check-labs-agent-lib
 
-uv pip install \
-  --index-url [https://test.pypi.org/simple/](https://test.pypi.org/simple/) \
-  --extra-index-url [https://pypi.org/simple/](https://pypi.org/simple/) \
-  labs-agent-lib
+uv pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ labs-agent-lib
 
 uv run python -c "from labs_agent_lib import get_logger, get_agent_settings; print('OK')"
 ```
@@ -72,7 +63,7 @@ Once TestPyPI verification passes:
 ```bash
 export UV_PUBLISH_TOKEN="$UV_PUBLISH_TOKEN_PYPI"
 
-uv publish dist/labs_agent_lib-0.1.0*
+uv publish dist/labs_agent_lib-0.1.0* --token pypi-..
 ```
 
 ### 4.1 Verify Production Installation
