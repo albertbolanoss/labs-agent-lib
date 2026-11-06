@@ -9,6 +9,10 @@ building Claude-agent-based projects:
 - `labs_agent_lib.file_reader` — extracts plain text from `.pdf`, `.docx`, `.txt`, `.md`, and `.markdown` files.
 - `labs_agent_lib.agent_environment` — builds the `ClaudeAgentOptions.env` dict (base URL, API key, custom headers)
   for the configured provider.
+- `labs_agent_lib.observability` — `PromptLogWriter`/`AgentTranscriptWriter`: JSONL writers for a prompt log
+  ("what we asked the model") and an agent transcript ("what happened, step by step"), correlated by a
+  caller-supplied `correlation_id`. Each consuming project supplies its own settings object (just needs
+  `observability_enabled`, `prompt_log_dir`, `agent_transcript_dir`) and a `service` name.
 
 ## Install
 
